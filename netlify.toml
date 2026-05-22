@@ -1,0 +1,23 @@
+# Configuration Netlify
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Les fonctions serverless sont accessibles via /api/*
+# IMPORTANT : doit être déclaré AVANT le catch-all SPA ci-dessous,
+# sinon /api/* serait absorbé par /* et renvoyé vers index.html.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Redirige tout le reste vers index.html (SPA React)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"
