@@ -79,8 +79,21 @@ body {
 }
 .pl-nav-link:hover { border-bottom-color: var(--pl-bleu); color: var(--pl-bleu); }
 
+.pl-burger { display: none; }
+
+.pl-mobile-link {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pl-noir);
+  text-decoration: none;
+}
+.pl-mobile-link:hover { background: var(--pl-fond); color: var(--pl-bleu); }
+
 @media (max-width: 640px) {
   .pl-nav-link { display: none; }
+  .pl-burger { display: inline-flex; align-items: center; justify-content: center; }
   .pl-about-row { grid-template-columns: 1fr !important; }
   .pl-about-row > div { order: 0 !important; }
   .pl-admin-grid { grid-template-columns: 1fr !important; }

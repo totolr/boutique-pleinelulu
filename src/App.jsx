@@ -10,6 +10,7 @@ import Admin from "./pages/Admin.jsx";
 
 function Nav() {
   const { count, setOpen } = useCart();
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav
       style={{
@@ -30,6 +31,7 @@ function Nav() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          position: "relative",
         }}
       >
         <a href="#top" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none", color: "inherit" }}>
@@ -53,7 +55,27 @@ function Nav() {
           <a href="#boutique" className="pl-nav-link">Boutique</a>
           <a href="#apropos" className="pl-nav-link">À propos</a>
           <button
+            className="pl-burger"
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            style={{
+              border: "none",
+              background: "transparent",
+              color: "#1a1a1a",
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              cursor: "pointer",
+              fontSize: 22,
+              lineHeight: 1,
+            }}
+          >
+            ☰
+          </button>
+          <button
             className="pl-cart-icon"
+            aria-label="Panier"
             onClick={() => {
               setOpen(true);
               track("open_cart");
@@ -95,6 +117,32 @@ function Nav() {
             )}
           </button>
         </div>
+        {menuOpen && (
+          <div
+            className="pl-mobile-menu"
+            style={{
+              position: "absolute",
+              top: 64,
+              right: 24,
+              background: "#fff",
+              border: "1px solid #00000012",
+              borderRadius: 12,
+              boxShadow: "0 10px 30px #00000018",
+              padding: 8,
+              display: "flex",
+              flexDirection: "column",
+              minWidth: 160,
+              zIndex: 60,
+            }}
+          >
+            <a href="#boutique" className="pl-mobile-link" onClick={() => setMenuOpen(false)}>
+              Boutique
+            </a>
+            <a href="#apropos" className="pl-mobile-link" onClick={() => setMenuOpen(false)}>
+              À propos
+            </a>
+          </div>
+        )}
       </div>
     </nav>
   );
