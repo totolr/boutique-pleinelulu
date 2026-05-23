@@ -451,8 +451,9 @@ function Shop() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 360px))",
             gap: 22,
+            justifyContent: "center",
           }}
         >
           {PRODUCTS.map((p, i) => (
