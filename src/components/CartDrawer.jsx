@@ -47,9 +47,8 @@ export default function CartDrawer() {
       try {
         data = raw ? JSON.parse(raw) : {};
       } catch {
-        throw new Error(
-          `Réponse serveur invalide (HTTP ${res.status}). Vérifie le terminal netlify dev.`
-        );
+        console.error("create-checkout: réponse non JSON", res.status, raw);
+        throw new Error("Le paiement est momentanément indisponible. Réessaie dans un instant.");
       }
 
       if (res.status === 409 && data.details) {
@@ -58,7 +57,10 @@ export default function CartDrawer() {
         return;
       }
       if (!res.ok) {
-        throw new Error(data.error || `Erreur ${res.status} : ${raw.slice(0, 120) || "réponse vide"}`);
+        console.error("create-checkout: échec", res.status, raw);
+        throw new Error(
+          data.error || "Le paiement est momentanément indisponible. Réessaie dans un instant ou écris-nous."
+        );
       }
 
       window.location.href = data.url;
