@@ -211,8 +211,28 @@ export default function CartDrawer() {
 
             {/* Erreurs */}
             {error && (
-              <div style={{ background: "#fef2f2", color: "#dc2626", padding: 12, borderRadius: 10, fontSize: 13, marginTop: 12 }}>
-                ⚠️ {error}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 8, background: "#fef2f2", color: "#dc2626", padding: 12, borderRadius: 10, fontSize: 13, marginTop: 12 }}>
+                <span style={{ flex: 1 }}>⚠️ {error}</span>
+                <button
+                  type="button"
+                  onClick={() => setError(null)}
+                  aria-label="Fermer ce message"
+                  style={{
+                    flexShrink: 0,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "inherit",
+                    fontSize: 18,
+                    lineHeight: 1,
+                    padding: 0,
+                    opacity: 0.7,
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+                >
+                  ×
+                </button>
               </div>
             )}
             {stockErrors.length > 0 && (

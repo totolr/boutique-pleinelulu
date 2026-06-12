@@ -382,15 +382,17 @@ function LightGraphic() {
   );
 }
 
-function Banner({ type }) {
+function Banner({ type, onClose }) {
   if (!type) return null;
   const isSuccess = type === "success";
+  const color = isSuccess ? "#15803d" : "#b45309";
   return (
     <div
       style={{
+        position: "relative",
         background: isSuccess ? "#dcfce7" : "#fef3c7",
-        color: isSuccess ? "#15803d" : "#b45309",
-        padding: "14px 24px",
+        color,
+        padding: "14px 48px",
         textAlign: "center",
         fontSize: 14,
         fontWeight: 600,
@@ -399,6 +401,34 @@ function Banner({ type }) {
       {isSuccess
         ? "🎉 Merci pour ta précommande ! Un email de confirmation arrive."
         : "Paiement annulé, ton panier est conservé."}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Fermer ce message"
+        style={{
+          position: "absolute",
+          top: "50%",
+          right: 12,
+          transform: "translateY(-50%)",
+          width: 28,
+          height: 28,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "none",
+          border: "none",
+          borderRadius: "50%",
+          cursor: "pointer",
+          color,
+          fontSize: 20,
+          lineHeight: 1,
+          opacity: 0.65,
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+        onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
+      >
+        ×
+      </button>
     </div>
   );
 }
@@ -440,7 +470,7 @@ function Shop() {
   return (
     <>
       <Nav />
-      <Banner type={banner} />
+      <Banner type={banner} onClose={() => setBanner(null)} />
 
       {/* Hero */}
       <header
