@@ -8,7 +8,9 @@ import ProductCard from "./components/ProductCard.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
 import Carousel from "./components/Carousel.jsx";
 import MapZone from "./components/MapZone.jsx";
+import CookieBanner from "./components/CookieBanner.jsx";
 import Admin from "./pages/Admin.jsx";
+import LegalPage from "./pages/Legal.jsx";
 
 function Nav() {
   const { count, setOpen } = useCart();
@@ -558,6 +560,27 @@ function Shop() {
         </div>
         Association loi 1901 · contact@pleinelulu.fr
         <br />
+        <nav
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 14,
+            justifyContent: "center",
+            margin: "12px 0 8px",
+          }}
+        >
+          <a href="/mentions-legales" className="pl-footer-link">Mentions légales</a>
+          <a href="/cgv" className="pl-footer-link">CGV</a>
+          <a href="/confidentialite" className="pl-footer-link">Confidentialité</a>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("pl-open-cookie-prefs"))}
+            className="pl-footer-link"
+            style={{ border: "none", background: "none", cursor: "pointer", font: "inherit", padding: 0 }}
+          >
+            Gérer les cookies
+          </button>
+        </nav>
         <span style={{ fontSize: 11 }}>
           © {new Date().getFullYear()} · Tous droits réservés
         </span>
@@ -569,13 +592,28 @@ function Shop() {
 }
 
 export default function App() {
-  // Routage minimal sur le pathname (pas de react-router pour 2 pages)
-  if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) {
+  // Routage minimal sur le pathname (pas de react-router pour quelques pages)
+  const path = typeof window !== "undefined" ? window.location.pathname : "/";
+
+  if (path.startsWith("/admin")) {
     return <Admin />;
   }
+
+  let page;
+  if (path.startsWith("/mentions-legales")) page = <LegalPage doc="mentions" />;
+  else if (path.startsWith("/cgv")) page = <LegalPage doc="cgv" />;
+  else if (path.startsWith("/confidentialite")) page = <LegalPage doc="confidentialite" />;
+  else
+    page = (
+      <CartProvider>
+        <Shop />
+      </CartProvider>
+    );
+
   return (
-    <CartProvider>
-      <Shop />
-    </CartProvider>
+    <>
+      {page}
+      <CookieBanner />
+    </>
   );
 }

@@ -169,3 +169,36 @@ body {
   text-shadow: 0 1px 2px #fff, 0 0 3px #fff, 0 0 3px #fff;
 }
 .leaflet-tooltip.pl-zone-label::before { display: none; }
+
+/* Pages légales (mentions, CGV, confidentialité) */
+.pl-legal { color: #1a1a1a; }
+.pl-legal h2 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin: 38px 0 12px;
+}
+.pl-legal h3 { font-size: 16px; font-weight: 700; margin: 24px 0 8px; }
+.pl-legal p, .pl-legal li { font-size: 15px; line-height: 1.7; color: #333; }
+.pl-legal p { margin: 0 0 14px; }
+.pl-legal ul { margin: 0 0 16px; padding-left: 22px; }
+.pl-legal li { margin-bottom: 7px; }
+.pl-legal a { color: #0055A4; text-decoration: underline; }
+.pl-legal strong { color: #1a1a1a; }
+.pl-legal-block {
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 0 0 18px;
+}
+.pl-legal-block p { line-height: 1.6; }
+
+/* Liens du pied de page (mentions, CGV, confidentialité, cookies) */
+.pl-footer-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #777;
+  text-decoration: none;
+}
+.pl-footer-link:hover { color: #1a1a1a; }
