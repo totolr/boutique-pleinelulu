@@ -6,4 +6,5 @@
  */
 export const INSTAGRAM_HANDLE = "@pleine.lulu";
 export const INSTAGRAM_URL = "https://www.instagram.com/pleine.lulu/";
+export const LINKEDIN_URL = "https://www.linkedin.com/company/98695995";
 export const CONTACT_EMAIL = "contact@pleinelulu.fr";

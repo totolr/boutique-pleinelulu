@@ -9,6 +9,7 @@ import CartDrawer from "./components/CartDrawer.jsx";
 import Carousel from "./components/Carousel.jsx";
 import MapZone from "./components/MapZone.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
+import SocialLinks from "./components/SocialLinks.jsx";
 import Admin from "./pages/Admin.jsx";
 import LegalPage from "./pages/Legal.jsx";
 import SupportPage from "./pages/Support.jsx";
@@ -583,7 +584,8 @@ function Shop() {
             Gérer les cookies
           </button>
         </nav>
-        <span style={{ fontSize: 11 }}>
+        <SocialLinks size={19} />
+        <span style={{ display: "block", marginTop: 12, fontSize: 11 }}>
           © {new Date().getFullYear()} · Tous droits réservés
         </span>
       </footer>

@@ -1,4 +1,5 @@
 import Logo from "../components/Logo.jsx";
+import SocialLinks from "../components/SocialLinks.jsx";
 import { CONTACT_EMAIL, INSTAGRAM_HANDLE, INSTAGRAM_URL } from "../lib/contact.js";
 
 /*
@@ -123,6 +124,11 @@ export default function SupportPage() {
             les coordonnées figurent dans nos <a href="/mentions-legales">mentions légales</a>.
           </p>
         </article>
+
+        <div style={{ marginTop: 48, paddingTop: 28, borderTop: "1px solid #00000010", textAlign: "center" }}>
+          <p style={{ fontSize: 13, color: "#999", margin: "0 0 14px" }}>Suivez-nous</p>
+          <SocialLinks size={22} />
+        </div>
       </main>
     </div>
   );

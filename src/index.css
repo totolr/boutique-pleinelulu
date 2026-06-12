@@ -202,3 +202,10 @@ body {
   text-decoration: none;
 }
 .pl-footer-link:hover { color: #1a1a1a; }
+
+.pl-social {
+  display: inline-flex;
+  color: #aaa;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+.pl-social:hover { color: #1a1a1a; transform: translateY(-1px); }
