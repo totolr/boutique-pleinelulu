@@ -6,6 +6,7 @@ import { PRODUCTS } from "./lib/products.js";
 import Logo from "./components/Logo.jsx";
 import ProductCard from "./components/ProductCard.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
+import Carousel from "./components/Carousel.jsx";
 import Admin from "./pages/Admin.jsx";
 
 function Nav() {
@@ -150,30 +151,29 @@ function Nav() {
 
 function About() {
   const stats = [
-    { value: "1", label: "année d'existence" },
-    { value: "0", label: "adhérents" },
-    { value: "1", label: "produit en vente" },
+    { value: "3", label: "années d'existence" },
+    { value: "4", label: "produits en vente" },
   ];
 
   const blocks = [
     {
       eyebrow: "Pourquoi on existe",
       title: "Notre histoire",
-      text: "Pleine Lulu est née de l'envie de financer des activités sportives accessibles à tous. C'est tout récent, une poignée de bénévoles, une boutique en ligne et beaucoup d'envie. On n'a pas encore fait grand chose, on assume, mais on construit.",
+      text: "Pleine Lulu, ça fait trois ans. On est juste trois à essayer de faire vivre un truc autour du football dans les quartiers populaires : des événements sur le terrain, et une boutique qui finance tout ça.",
       variant: "flag",
       reversed: false,
     },
     {
       eyebrow: "Notre but",
       title: "Sport pour tous",
-      text: "100% des bénéfices de la boutique sont reversés aux activités sportives. L'objectif : permettre à un maximum de personnes de pratiquer un sport, sans barrière financière.",
+      text: "100% des bénéfices de la boutique sont reversés à nos activités. L'objectif : permettre au plus grand nombre de jouer au foot, sans barrière financière.",
       variant: "dark",
       reversed: true,
     },
     {
       eyebrow: "Et après ?",
-      title: "Grandir, doucement",
-      text: "On commence avec une édition spéciale Coupe du Monde 2026. La suite dépendra de vous : plus on vend, plus on peut soutenir. À terme : des événements, plus de produits, et pourquoi pas un club. Pour l'instant : un premier t-shirt.",
+      title: "On continue",
+      text: "Nos t-shirts sont en précommande : Coupe du Monde, Tricolore, Les Bleus, Nantes FC. Plus on vend, plus on organise d'événements dans les quartiers. La suite dépend de vous.",
       variant: "light",
       reversed: false,
     },
@@ -190,8 +190,8 @@ function About() {
             Pleine Lulu, asso sportive{" "}
             <span style={{ borderBottom: "4px solid #EF4135", paddingBottom: 2 }}>loi 1901</span>
           </h2>
-          <p style={{ fontSize: 15, color: "#666", maxWidth: 520, margin: "0 auto", lineHeight: 1.5 }}>
-            Une asso qui finance le sport pour tous grâce à sa boutique. Tout est encore modeste, mais l'envie est là.
+          <p style={{ fontSize: 15, color: "#666", maxWidth: 600, margin: "0 auto", lineHeight: 1.5 }}>
+            Notre objectif est simple, promouvoir la pratique du football dans les quartiers populaires, en transmettant notre passion pour le football grâce à des évènements !
           </p>
         </div>
 
@@ -253,41 +253,106 @@ function AboutBlock({ eyebrow, title, text, variant, reversed, index }) {
   );
 }
 
+// Photos "Sport pour tous" : déposer dans public/photos/ (sport-pour-tous-1.webp, -2...).
+// Tant qu'aucune n'existe, le visuel graphique de repli s'affiche.
+const SPORT_PHOTOS = [
+  "/photos/sport-pour-tous-1.webp",
+  "/photos/sport-pour-tous-2.webp",
+  "/photos/sport-pour-tous-3.webp",
+  "/photos/sport-pour-tous-4.webp",
+  "/photos/sport-pour-tous-5.webp",
+  "/photos/sport-pour-tous-6.webp",
+];
+
 function AboutVisual({ variant, order }) {
-  const common = {
+  const box = {
     aspectRatio: "4 / 3",
     borderRadius: 12,
     overflow: "hidden",
     position: "relative",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    background: "#f5f5f5",
     order,
   };
 
+  // "Notre histoire" : photo de l'équipe (public/photos/equipe.webp) ou drapeau.
   if (variant === "flag") {
     return (
-      <div style={{ ...common, display: "flex" }}>
-        <div style={{ flex: 1, background: "#0055A4" }} />
-        <div style={{ flex: 1, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <img src="/logo-symbole.png" alt="" width={72} height={72} style={{ objectFit: "contain" }} />
-        </div>
-        <div style={{ flex: 1, background: "#EF4135" }} />
+      <div style={box}>
+        <Carousel
+          candidates={["/photos/equipe.webp"]}
+          alt="L'équipe Pleine Lulu"
+          fallback={<FlagGraphic />}
+        />
       </div>
     );
   }
+  // "Sport pour tous" : carrousel de photos de jeunes footballeurs ou repli sombre.
   if (variant === "dark") {
     return (
-      <div style={{ ...common, background: "#1a1a1a", flexDirection: "column", gap: 14 }}>
-        <img src="/logo-symbole-white.png" alt="" width={72} height={72} style={{ objectFit: "contain" }} />
-        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: "#fff", letterSpacing: 4 }}>
-          SPORT POUR TOUS
-        </div>
+      <div style={box}>
+        <Carousel
+          candidates={SPORT_PHOTOS}
+          alt="Jeunes footballeurs Pleine Lulu"
+          fallback={<DarkGraphic />}
+        />
       </div>
     );
   }
   return (
-    <div style={{ ...common, background: "#f5f5f5", flexDirection: "column", gap: 12 }}>
+    <div style={box}>
+      <LightGraphic />
+    </div>
+  );
+}
+
+function FlagGraphic() {
+  return (
+    <div style={{ position: "absolute", inset: 0, display: "flex" }}>
+      <div style={{ flex: 1, background: "#0055A4" }} />
+      <div style={{ flex: 1, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <img src="/logo-symbole.png" alt="" width={72} height={72} style={{ objectFit: "contain" }} />
+      </div>
+      <div style={{ flex: 1, background: "#EF4135" }} />
+    </div>
+  );
+}
+
+function DarkGraphic() {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: "#1a1a1a",
+        display: "flex",
+        flexDirection: "column",
+        gap: 14,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <img src="/logo-symbole-white.png" alt="" width={72} height={72} style={{ objectFit: "contain" }} />
+      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: "#fff", letterSpacing: 4 }}>
+        SPORT POUR TOUS
+      </div>
+    </div>
+  );
+}
+
+function LightGraphic() {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: "#f5f5f5",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <img src="/logo-symbole.png" alt="" width={64} height={64} style={{ objectFit: "contain" }} />
       <span
         style={{
@@ -302,7 +367,7 @@ function AboutVisual({ variant, order }) {
           borderRadius: 50,
         }}
       >
-        Édition Coupe du Monde 2026
+        Précommande ouverte
       </span>
     </div>
   );
@@ -323,7 +388,7 @@ function Banner({ type }) {
       }}
     >
       {isSuccess
-        ? "🎉 Merci pour ta commande ! Un email de confirmation arrive."
+        ? "🎉 Merci pour ta précommande ! Un email de confirmation arrive."
         : "Paiement annulé, ton panier est conservé."}
     </div>
   );
@@ -393,7 +458,7 @@ function Shop() {
             marginBottom: 22,
           }}
         >
-          🏃 Boutique solidaire : chaque achat finance le sport
+          🏃 Précommande ouverte · chaque achat finance le sport
         </div>
         <h1
           style={{
@@ -404,9 +469,7 @@ function Shop() {
             marginBottom: 16,
           }}
         >
-          Porte les couleurs
-          <br />
-          de Pleine{" "}
+          Pleine{" "}
           <span
             style={{
               borderBottom: "4px solid #EF4135",
@@ -417,7 +480,7 @@ function Shop() {
           </span>
         </h1>
         <p style={{ color: "#666", fontSize: 17, maxWidth: 480, margin: "0 auto" }}>
-          T-shirts, sweats et accessoires de l'asso. 100% des bénéfices
+          T-shirts de l'asso. 100% des bénéfices
           reversés aux activités sportives.
         </p>
       </header>
@@ -436,10 +499,10 @@ function Shop() {
                 marginRight: 50,
               }}
             >
-              <span style={{ color: "#0055A4" }}>★</span> COTON BIO{" "}
-              <span style={{ color: "#fff" }}>★</span> FABRIQUÉ EN FRANCE{" "}
-              <span style={{ color: "#EF4135" }}>★</span> LIVRAISON 7 JOURS{" "}
-              <span style={{ color: "#0055A4" }}>★</span> 100% ASSOCIATIF{" "}
+              <span style={{ color: "#0055A4" }}>★</span> 100% COTON{" "}
+              <span style={{ color: "#fff" }}>★</span> IMPRIMÉ EN FRANCE{" "}
+              <span style={{ color: "#EF4135" }}>★</span> PRÉCOMMANDE OUVERTE{" "}
+              <span style={{ color: "#0055A4" }}>★</span> TSHIRT ASSOCIATIF{" "}
               <span style={{ color: "#EF4135" }}>★</span> SPORT POUR TOUS &nbsp;&nbsp;
             </span>
           ))}

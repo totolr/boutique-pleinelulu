@@ -120,14 +120,18 @@ CREATE POLICY "stock lisible par tous"
 
 -- Stock initial : adapter les quantités au stock réel.
 
+-- Seuls les produits SANS flag preorder (cf. netlify/functions/_catalog.js) ont
+-- du stock : "Les Bleus 2024" et "Nantes FC" (écoulement). Les précommandes
+-- (Coupe du Monde 2026, Tricolore 2026) n'ont PAS de ligne de stock.
 INSERT INTO stock (product_id, color, size, quantity) VALUES
-  -- T-Shirt Coupe du Monde 2026 (édition limitée)
-  ('tee-coupe-monde-2026', '#0055A4', 'S', 8),
-  ('tee-coupe-monde-2026', '#0055A4', 'M', 15),
-  ('tee-coupe-monde-2026', '#0055A4', 'L', 15),
-  ('tee-coupe-monde-2026', '#0055A4', 'XL', 8),
-  ('tee-coupe-monde-2026', '#ffffff', 'S', 8),
-  ('tee-coupe-monde-2026', '#ffffff', 'M', 15),
-  ('tee-coupe-monde-2026', '#ffffff', 'L', 15),
-  ('tee-coupe-monde-2026', '#ffffff', 'XL', 8)
+  ('bleus-2024', '#ffffff', 'XS', 0),
+  ('bleus-2024', '#ffffff', 'S', 4),
+  ('bleus-2024', '#ffffff', 'M', 5),
+  ('bleus-2024', '#ffffff', 'L', 6),
+  ('bleus-2024', '#ffffff', 'XL', 3),
+  ('nantes-fc', '#ffffff', 'XS', 0),
+  ('nantes-fc', '#ffffff', 'S', 7),
+  ('nantes-fc', '#ffffff', 'M', 5),
+  ('nantes-fc', '#ffffff', 'L', 5),
+  ('nantes-fc', '#ffffff', 'XL', 0)
 ON CONFLICT (product_id, color, size) DO NOTHING;

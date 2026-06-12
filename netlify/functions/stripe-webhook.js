@@ -48,6 +48,8 @@ export async function handler(event) {
     }
 
     for (const item of cart) {
+      const product = PRODUCTS[item.productId];
+      if (!product || product.preorder) continue; // précommande : pas de décrément de stock
       const { data, error } = await supabase.rpc("decrement_stock", {
         p_product_id: item.productId,
         p_color: item.color,
@@ -134,6 +136,8 @@ async function sendConfirmationEmail(session, cart, orderNumber) {
 
 function buildEmailHtml({ session, cart, firstName, orderNumber }) {
   const totalFmt = formatEUR(session.amount_total);
+  // Précommande : au moins un article du panier est marqué preorder dans le catalogue.
+  const hasPreorder = cart.some((it) => PRODUCTS[it.productId]?.preorder);
   const shippingAmount = session.shipping_cost?.amount_total ?? 0;
   const shippingLabel = session.shipping_cost?.shipping_rate
     ? "" // rempli ci-dessous si on a le rate_data inline
@@ -219,7 +223,10 @@ function buildEmailHtml({ session, cart, firstName, orderNumber }) {
       </div>
 
       <div style="margin-top:28px;padding-top:20px;border-top:1px solid #f0f0f0;font-size:13px;color:#666;line-height:1.55;">
-        On prépare ton colis dans les prochains jours. Tu reçois un nouveau mail dès que c'est expédié. Pour toute question, réponds simplement à ce mail.
+        ${hasPreorder
+          ? "Ta précommande part en fabrication (environ 1 semaine). Tu reçois un nouveau mail dès l'expédition, puis compte 5 à 7 jours de livraison."
+          : "On prépare ton colis dans les prochains jours. Tu reçois un nouveau mail dès que c'est expédié."}
+        Pour toute question, réponds simplement à ce mail.
       </div>
     </div>
 

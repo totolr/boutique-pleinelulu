@@ -44,9 +44,11 @@ export async function handler(event) {
       });
     }
 
-    // 1. Vérification du stock
+    // 1. Vérification du stock (sautée pour les produits en précommande)
     const outOfStock = [];
     for (const item of items) {
+      const product = PRODUCTS[item.productId];
+      if (!product || product.preorder) continue; // précommande : pas de contrôle de stock
       const { data } = await supabase
         .from("stock")
         .select("quantity")
@@ -57,9 +59,8 @@ export async function handler(event) {
 
       const available = data?.quantity ?? 0;
       if (available < item.qty) {
-        const p = PRODUCTS[item.productId];
         outOfStock.push(
-          `${p?.name || item.productId} (${COLOR_NAMES[item.color] || item.color}, ${item.size}) : ${available} dispo, ${item.qty} demandé`
+          `${product.name} (${COLOR_NAMES[item.color] || item.color}, ${item.size}) : ${available} dispo, ${item.qty} demandé`
         );
       }
     }

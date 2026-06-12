@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { useCart } from "../lib/cart.jsx";
 import { track } from "../lib/analytics.js";
-import { SIZES, COLOR_NAMES, formatPrice, getProductImage } from "../lib/products.js";
-import ProductImage from "./ProductImage.jsx";
+import { SIZES, COLOR_NAMES, formatPrice, getProductPhotos } from "../lib/products.js";
+import Carousel from "./Carousel.jsx";
 
 export default function ProductCard({ product, stock, index }) {
   const { addItem } = useCart();
-  const [color, setColor] = useState(product.colors[0]);
+  const [color, setColor] = useState(product.colors?.[0] || "#ffffff");
   const [size, setSize] = useState("M");
   const [added, setAdded] = useState(false);
 
-  // stock = { "color-size": quantity } pour CE produit
+  const preorder = !!product.preorder;
+  const hasColors = (product.colors?.length || 0) > 1;
+
+  // Stock : pris en compte uniquement hors précommande.
+  // stock = { "color-size": quantity } pour CE produit.
   const qty = stock?.[`${color}-${size}`];
-  const known = qty !== undefined; // a-t-on l'info stock ?
+  const known = !preorder && qty !== undefined;
   const isOut = known && qty <= 0;
   const isLow = known && qty > 0 && qty <= 5;
-
   const stockForSize = (s) => stock?.[`${color}-${s}`];
 
   const handleAdd = () => {
@@ -41,23 +44,15 @@ export default function ProductCard({ product, stock, index }) {
         animation: `slideUp 0.5s ease-out ${index * 0.07}s both`,
       }}
     >
-      {/* Visuel */}
-      <div
-        style={{
-          aspectRatio: "1",
-          background: "#f5f5f5",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-        }}
-      >
+      {/* Visuel : carrousel coeur / avant / dos */}
+      <div style={{ aspectRatio: "1", background: "#f5f5f5", position: "relative" }}>
         {product.badge && (
           <span
             style={{
               position: "absolute",
               top: 12,
               left: 12,
+              zIndex: 4,
               background: "#EF4135",
               color: "#fff",
               padding: "4px 12px",
@@ -79,7 +74,7 @@ export default function ProductCard({ product, stock, index }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              zIndex: 2,
+              zIndex: 5,
             }}
           >
             <span
@@ -96,18 +91,10 @@ export default function ProductCard({ product, stock, index }) {
             </span>
           </div>
         )}
-        <ProductImage
-          src={getProductImage(product, color)}
-          alt={`${product.name} - ${COLOR_NAMES[color] || color}`}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          fallback={
-            <svg width="96" height="96" viewBox="0 0 100 100">
-              <path
-                d="M50 16 L34 34 H16 L22 54 L16 86 H42 L50 70 L58 86 H84 L78 54 L84 34 H66 Z"
-                fill={color}
-              />
-            </svg>
-          }
+        <Carousel
+          candidates={getProductPhotos(product)}
+          alt={product.name}
+          fallback={<ShirtPlaceholder />}
         />
       </div>
 
@@ -119,64 +106,77 @@ export default function ProductCard({ product, stock, index }) {
             {formatPrice(product.price)}
           </span>
         </div>
-        <p style={{ color: "#999", fontSize: 13, margin: "4px 0 10px" }}>
-          {product.desc}
-        </p>
+        <p style={{ color: "#999", fontSize: 13, margin: "4px 0 10px" }}>{product.desc}</p>
 
-        {/* Indicateur de stock */}
-        {known && (
+        {/* Précommande OU indicateur de stock */}
+        {preorder ? (
           <div
             style={{
               fontSize: 12,
               fontWeight: 600,
-              marginBottom: 10,
+              marginBottom: 12,
               display: "flex",
               alignItems: "center",
               gap: 6,
-              color: isOut ? "#999" : isLow ? "#d97706" : "#16a34a",
+              color: "#6d28d9",
             }}
           >
-            <span
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: isOut ? "#ccc" : isLow ? "#f59e0b" : "#22c55e",
-              }}
-            />
-            {isOut
-              ? "Rupture de stock"
-              : isLow
-              ? `Plus que ${qty} en stock !`
-              : "En stock"}
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#6d28d9" }} />
+            Précommande · disponible sous ~1 semaine
           </div>
+        ) : (
+          known && (
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 600,
+                marginBottom: 10,
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                color: isOut ? "#999" : isLow ? "#d97706" : "#16a34a",
+              }}
+            >
+              <span
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: "50%",
+                  background: isOut ? "#ccc" : isLow ? "#f59e0b" : "#22c55e",
+                }}
+              />
+              {isOut ? "Rupture de stock" : isLow ? `Plus que ${qty} en stock !` : "En stock"}
+            </div>
+          )
         )}
 
-        {/* Couleurs */}
-        <div style={{ display: "flex", gap: 7, marginBottom: 12 }}>
-          {product.colors.map((c) => (
-            <button
-              key={c}
-              className="pl-swatch"
-              title={COLOR_NAMES[c]}
-              onClick={() => setColor(c)}
-              style={{
-                width: 26,
-                height: 26,
-                borderRadius: "50%",
-                background: c,
-                cursor: "pointer",
-                border: color === c ? "3px solid #1a1a1a" : "3px solid #e5e5e5",
-              }}
-            />
-          ))}
-        </div>
+        {/* Couleurs (seulement si plusieurs déclinaisons) */}
+        {hasColors && (
+          <div style={{ display: "flex", gap: 7, marginBottom: 12 }}>
+            {product.colors.map((c) => (
+              <button
+                key={c}
+                className="pl-swatch"
+                title={COLOR_NAMES[c]}
+                onClick={() => setColor(c)}
+                style={{
+                  width: 26,
+                  height: 26,
+                  borderRadius: "50%",
+                  background: c,
+                  cursor: "pointer",
+                  border: color === c ? "3px solid #1a1a1a" : "3px solid #e5e5e5",
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Tailles */}
         <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
           {SIZES.map((s) => {
             const sQty = stockForSize(s);
-            const sOut = sQty !== undefined && sQty <= 0;
+            const sOut = !preorder && sQty !== undefined && sQty <= 0;
             const isActive = size === s && !sOut;
             return (
               <button
@@ -204,7 +204,7 @@ export default function ProductCard({ product, stock, index }) {
           })}
         </div>
 
-        {/* Ajouter au panier */}
+        {/* CTA */}
         <button
           className={isOut || added ? "" : "pl-btn-add"}
           onClick={handleAdd}
@@ -221,9 +221,39 @@ export default function ProductCard({ product, stock, index }) {
             color: isOut ? "#999" : "#fff",
           }}
         >
-          {isOut ? "Indisponible" : added ? "✓ Ajouté !" : "Ajouter au panier"}
+          {isOut
+            ? "Indisponible"
+            : added
+            ? "✓ Ajouté !"
+            : preorder
+            ? "Précommander"
+            : "Ajouter au panier"}
         </button>
       </div>
+    </div>
+  );
+}
+
+function ShirtPlaceholder() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 8,
+        color: "#bdbdbd",
+      }}
+    >
+      <svg width="84" height="84" viewBox="0 0 100 100" aria-hidden="true">
+        <path
+          d="M50 16 L34 34 H16 L22 54 L16 86 H42 L50 70 L58 86 H84 L78 54 L84 34 H66 Z"
+          fill="#d8d8d8"
+        />
+      </svg>
+      <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
+        Visuel à venir
+      </span>
     </div>
   );
 }

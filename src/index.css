@@ -98,3 +98,53 @@ body {
   .pl-about-row > div { order: 0 !important; }
   .pl-admin-grid { grid-template-columns: 1fr !important; }
 }
+
+/* Carrousel produit / photos */
+.pl-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1a1a1a;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 6px #00000022;
+  z-index: 3;
+  transition: background 0.15s, transform 0.15s;
+}
+.pl-carousel-arrow:hover { background: #fff; }
+.pl-carousel-prev { left: 10px; }
+.pl-carousel-next { right: 10px; }
+
+.pl-carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  z-index: 3;
+}
+.pl-carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 1px #00000022;
+  cursor: pointer;
+}
+.pl-carousel-dot.is-active {
+  background: #fff;
+  box-shadow: 0 0 0 1px #1a1a1a55;
+}

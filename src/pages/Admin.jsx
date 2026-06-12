@@ -859,6 +859,7 @@ function OrderCard({ order, onUpdate }) {
   const status = order.status || "paid";
   const color = STATUS_COLORS[status] || STATUS_COLORS.paid;
   const items = Array.isArray(order.items) ? order.items : [];
+  const isPreorder = items.some((it) => getProduct(it.productId)?.preorder);
   const date = new Date(order.created_at).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
   const stripeUrl = `https://dashboard.stripe.com/checkout/sessions/${order.stripe_session_id}`;
 
@@ -884,6 +885,22 @@ function OrderCard({ order, onUpdate }) {
             >
               {STATUS_LABELS[status]}
             </span>
+            {isPreorder && (
+              <span
+                style={{
+                  background: "#ede9fe",
+                  color: "#6d28d9",
+                  padding: "3px 10px",
+                  borderRadius: 50,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                }}
+              >
+                Précommande
+              </span>
+            )}
           </div>
           {order.customer_name && (
             <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a" }}>{order.customer_name}</div>
@@ -895,6 +912,23 @@ function OrderCard({ order, onUpdate }) {
 
         <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ fontSize: 18, fontWeight: 800, color: "#1a1a1a" }}>{formatPrice(order.amount_total)}</div>
+          {isPreorder && status === "paid" && (
+            <button
+              onClick={() => onUpdate({ status: "preparing" })}
+              style={{
+                background: "#16a34a",
+                color: "#fff",
+                border: "none",
+                padding: "8px 14px",
+                borderRadius: 8,
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Valider la précommande
+            </button>
+          )}
           <select
             value={status}
             onChange={(e) => onUpdate({ status: e.target.value })}
