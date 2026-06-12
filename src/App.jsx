@@ -7,6 +7,7 @@ import Logo from "./components/Logo.jsx";
 import ProductCard from "./components/ProductCard.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
 import Carousel from "./components/Carousel.jsx";
+import MapZone from "./components/MapZone.jsx";
 import Admin from "./pages/Admin.jsx";
 
 function Nav() {
@@ -54,6 +55,7 @@ function Nav() {
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
           <a href="#boutique" className="pl-nav-link">Boutique</a>
+          <a href="#zone" className="pl-nav-link">Retrait</a>
           <a href="#apropos" className="pl-nav-link">À propos</a>
           <button
             className="pl-burger"
@@ -138,6 +140,9 @@ function Nav() {
           >
             <a href="#boutique" className="pl-mobile-link" onClick={() => setMenuOpen(false)}>
               Boutique
+            </a>
+            <a href="#zone" className="pl-mobile-link" onClick={() => setMenuOpen(false)}>
+              Retrait
             </a>
             <a href="#apropos" className="pl-mobile-link" onClick={() => setMenuOpen(false)}>
               À propos
@@ -526,6 +531,8 @@ function Shop() {
       </main>
 
       <About />
+
+      <MapZone />
 
       {/* Footer */}
       <footer

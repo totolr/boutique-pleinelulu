@@ -7,7 +7,7 @@
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 import { PRODUCTS, COLOR_NAMES } from "./_catalog.js";
-import { isPickupEligible, DELIVERY_AMOUNT_CENTS } from "./_shipping.js";
+import { isPickupEligibleCommune, DELIVERY_AMOUNT_CENTS } from "./_shipping.js";
 
 const stripeMode = process.env.STRIPE_SECRET_KEY?.startsWith("sk_live")
   ? "LIVE"
@@ -30,7 +30,7 @@ export async function handler(event) {
   }
 
   try {
-    const { items, shippingMethod, postalCode } = JSON.parse(event.body || "{}");
+    const { items, shippingMethod, commune } = JSON.parse(event.body || "{}");
 
     if (!items || items.length === 0) {
       return json(400, { error: "Panier vide" });
@@ -38,9 +38,9 @@ export async function handler(event) {
 
     // Mode de livraison : le serveur tranche, jamais le client.
     const method = shippingMethod === "pickup" ? "pickup" : "delivery";
-    if (method === "pickup" && !isPickupEligible(postalCode)) {
+    if (method === "pickup" && !isPickupEligibleCommune(commune)) {
       return json(400, {
-        error: "Le retrait sur place n'est pas disponible pour ce code postal. Choisis la livraison à domicile.",
+        error: "Le retrait sur place n'est pas disponible pour cette commune. Choisis la livraison à domicile.",
       });
     }
 

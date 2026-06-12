@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase, fetchStock } from "../lib/supabase.js";
 import { formatPrice, COLOR_NAMES, SIZES, getProduct, getProductImage } from "../lib/products.js";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "../lib/contact.js";
 import Logo from "../components/Logo.jsx";
 import ProductImage from "../components/ProductImage.jsx";
 
@@ -1200,7 +1201,18 @@ function DeliveryBlock({ order }) {
   if (order.shipping_method === "pickup") {
     return (
       <div style={cell}>
-        <div>Retrait sur place · le client cale le RDV via Instagram.</div>
+        <div>
+          Retrait sur place · le client cale le RDV via Instagram,{" "}
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#0055A4", fontWeight: 600, textDecoration: "none" }}
+          >
+            {INSTAGRAM_HANDLE}
+          </a>
+          .
+        </div>
         {billing && (
           <>
             <div style={subtitle}>Facturation</div>

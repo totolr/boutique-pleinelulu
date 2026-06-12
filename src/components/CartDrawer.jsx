@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useCart } from "../lib/cart.jsx";
 import { track } from "../lib/analytics.js";
 import { COLOR_NAMES, formatPrice, getProduct, getProductImage } from "../lib/products.js";
+import { PICKUP_COMMUNES } from "../lib/pickup-zones.js";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "../lib/contact.js";
 import ProductImage from "./ProductImage.jsx";
 
 export default function CartDrawer() {
@@ -10,7 +12,7 @@ export default function CartDrawer() {
   const [error, setError] = useState(null);
   const [stockErrors, setStockErrors] = useState([]);
   const [shippingMethod, setShippingMethod] = useState("delivery");
-  const [postalCode, setPostalCode] = useState("");
+  const [commune, setCommune] = useState("");
 
   if (!open) return null;
 
@@ -18,8 +20,8 @@ export default function CartDrawer() {
     setError(null);
     setStockErrors([]);
 
-    if (shippingMethod === "pickup" && !/^\d{5}$/.test(postalCode.trim())) {
-      setError("Entre un code postal valide (5 chiffres) pour le retrait sur place.");
+    if (shippingMethod === "pickup" && !commune) {
+      setError("Choisis ta commune pour le retrait sur place.");
       return;
     }
 
@@ -38,7 +40,7 @@ export default function CartDrawer() {
             qty: i.qty,
           })),
           shippingMethod,
-          postalCode: shippingMethod === "pickup" ? postalCode.trim() : undefined,
+          commune: shippingMethod === "pickup" ? commune : undefined,
         }),
       });
 
@@ -69,6 +71,9 @@ export default function CartDrawer() {
       setLoading(false);
     }
   };
+
+  // Le panier contient-il au moins une précommande ? (adapte les libellés)
+  const hasPreorder = items.some((i) => getProduct(i.productId)?.preorder);
 
   return (
     <div
@@ -249,13 +254,9 @@ export default function CartDrawer() {
 
               {shippingMethod === "pickup" && (
                 <div style={{ marginTop: 12 }}>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={5}
-                    value={postalCode}
-                    onChange={(e) => { setPostalCode(e.target.value.replace(/\D/g, "")); setError(null); }}
-                    placeholder="Ton code postal"
+                  <select
+                    value={commune}
+                    onChange={(e) => { setCommune(e.target.value); setError(null); }}
                     style={{
                       width: "100%",
                       padding: "12px 14px",
@@ -263,10 +264,28 @@ export default function CartDrawer() {
                       border: "1px solid #ddd",
                       fontSize: 14,
                       boxSizing: "border-box",
+                      background: "#fff",
+                      cursor: "pointer",
                     }}
-                  />
+                  >
+                    <option value="">Choisis ta commune...</option>
+                    {PICKUP_COMMUNES.map((c) => (
+                      <option key={c.name} value={c.name}>
+                        {c.name} ({c.cp})
+                      </option>
+                    ))}
+                  </select>
                   <p style={{ color: "#aaa", fontSize: 11, marginTop: 6 }}>
-                    Le retrait n'est dispo que dans certaines zones. On cale le point de RDV ensuite sur Instagram.
+                    Retrait possible uniquement dans ces communes. On cale le point de RDV ensuite sur Instagram,{" "}
+                    <a
+                      href={INSTAGRAM_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#0055A4", fontWeight: 600, textDecoration: "none" }}
+                    >
+                      {INSTAGRAM_HANDLE}
+                    </a>
+                    .
                   </p>
                 </div>
               )}
@@ -301,9 +320,19 @@ export default function CartDrawer() {
                   cursor: loading ? "default" : "pointer",
                 }}
               >
-                {loading ? "Redirection..." : "🔒 Payer avec Stripe"}
+                {loading
+                  ? "Redirection..."
+                  : hasPreorder
+                  ? "🔒 Précommander avec Stripe"
+                  : "🔒 Payer avec Stripe"}
               </button>
-              <p style={{ textAlign: "center", color: "#aaa", fontSize: 11, marginTop: 10 }}>
+              <p style={{ textAlign: "center", color: "#aaa", fontSize: 11, marginTop: 10, lineHeight: 1.5 }}>
+                {hasPreorder && (
+                  <>
+                    Précommande · prélèvement immédiat, fabrication ~1 semaine puis livraison 5-7 j.
+                    <br />
+                  </>
+                )}
                 Paiement sécurisé · CB, Apple Pay, Google Pay
               </p>
             </div>
