@@ -11,6 +11,7 @@ import MapZone from "./components/MapZone.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import Admin from "./pages/Admin.jsx";
 import LegalPage from "./pages/Legal.jsx";
+import SupportPage from "./pages/Support.jsx";
 
 function Nav() {
   const { count, setOpen } = useCart();
@@ -569,6 +570,7 @@ function Shop() {
             margin: "12px 0 8px",
           }}
         >
+          <a href="/aide" className="pl-footer-link">Aide & contact</a>
           <a href="/mentions-legales" className="pl-footer-link">Mentions légales</a>
           <a href="/cgv" className="pl-footer-link">CGV</a>
           <a href="/confidentialite" className="pl-footer-link">Confidentialité</a>
@@ -600,7 +602,8 @@ export default function App() {
   }
 
   let page;
-  if (path.startsWith("/mentions-legales")) page = <LegalPage doc="mentions" />;
+  if (path.startsWith("/aide")) page = <SupportPage />;
+  else if (path.startsWith("/mentions-legales")) page = <LegalPage doc="mentions" />;
   else if (path.startsWith("/cgv")) page = <LegalPage doc="cgv" />;
   else if (path.startsWith("/confidentialite")) page = <LegalPage doc="confidentialite" />;
   else
