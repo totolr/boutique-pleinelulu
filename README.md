@@ -239,9 +239,9 @@ renommés avec : `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
 ## SEO
 
 Le SEO technique est en place dans `index.html` : titre, meta description,
-Open Graph, Twitter Card, données structurées JSON-LD. Penser à remplacer
-`pleinelulu.netlify.app` par le domaine réel et à créer une image
-`public/og-image.png` (1200x630) pour les partages.
+Open Graph, Twitter Card, données structurées JSON-LD, avec le domaine
+`https://pleinelulu.fr`. Reste à créer une image `public/og-image.png`
+(1200x630) pour les partages.
 
 ## Coûts
 
@@ -252,3 +252,10 @@ Open Graph, Twitter Card, données structurées JSON-LD. Penser à remplacer
 | Resend   | Gratuit (3000 emails/mois) |
 | PostHog  | Gratuit (1M événements/mois) |
 | Stripe   | 1,5% + 0,25 € par transaction |
+
+## Licence
+
+Code et contenus © Pleine Lulu, tous droits réservés. Le dépôt est public à
+titre de consultation : toute réutilisation du code, des visuels, des logos ou
+des textes nécessite l'accord écrit préalable de l'association
+(contact@pleinelulu.fr).
