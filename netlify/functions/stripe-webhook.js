@@ -73,6 +73,7 @@ export async function handler(event) {
       .from("orders")
       .insert({
         stripe_session_id: session.id,
+        stripe_payment_intent: session.payment_intent || null,
         customer_email: session.customer_details?.email || null,
         customer_name: session.customer_details?.name || null,
         amount_total: session.amount_total,

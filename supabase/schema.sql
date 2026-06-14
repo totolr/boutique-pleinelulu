@@ -41,6 +41,8 @@ ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipped_email_sent_at TIMESTAMPTZ;
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_address JSONB;
 -- Adresse de facturation (collectee pour tous, utile en retrait et pour la facture)
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS billing_address JSONB;
+-- Id du PaymentIntent Stripe (pi_...) : seul objet deep-linkable dans le dashboard Stripe
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS stripe_payment_intent TEXT;
 
 -- Contrainte sur les statuts autorisés
 ALTER TABLE orders DROP CONSTRAINT IF EXISTS orders_status_check;

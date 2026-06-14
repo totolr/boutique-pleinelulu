@@ -28,7 +28,7 @@ export async function handler(event) {
   if (event.httpMethod === "GET") {
     const { data, error } = await supabaseAdmin
       .from("orders")
-      .select("id, order_number, stripe_session_id, customer_email, customer_name, amount_total, items, status, shipping_method, shipping_address, billing_address, tracking_number, shipped_email_sent_at, notes, created_at")
+      .select("id, order_number, stripe_session_id, stripe_payment_intent, customer_email, customer_name, amount_total, items, status, shipping_method, shipping_address, billing_address, tracking_number, shipped_email_sent_at, notes, created_at")
       .order("created_at", { ascending: false })
       .limit(500);
 

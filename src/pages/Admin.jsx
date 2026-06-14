@@ -862,7 +862,12 @@ function OrderCard({ order, onUpdate }) {
   const items = Array.isArray(order.items) ? order.items : [];
   const isPreorder = items.some((it) => getProduct(it.productId)?.preorder);
   const date = new Date(order.created_at).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
-  const stripeUrl = `https://dashboard.stripe.com/checkout/sessions/${order.stripe_session_id}`;
+  // Seul le PaymentIntent (pi_...) est consultable dans le dashboard Stripe ;
+  // une checkout session (cs_...) n'a pas de page. Les anciennes commandes sans
+  // payment_intent n'affichent pas le lien plutot que d'en afficher un casse.
+  const stripeUrl = order.stripe_payment_intent
+    ? `https://dashboard.stripe.com/payments/${order.stripe_payment_intent}`
+    : null;
 
   return (
     <div style={{ background: "#fff", borderRadius: 12, padding: 18, boxShadow: "0 1px 3px #00000008" }}>
@@ -1020,21 +1025,23 @@ function OrderCard({ order, onUpdate }) {
               </div>
               <DeliveryBlock order={order} />
 
-              <a
-                href={stripeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-block",
-                  marginTop: 12,
-                  fontSize: 12,
-                  color: "#0055A4",
-                  textDecoration: "none",
-                  fontWeight: 600,
-                }}
-              >
-                Voir sur Stripe (facture) →
-              </a>
+              {stripeUrl && (
+                <a
+                  href={stripeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-block",
+                    marginTop: 12,
+                    fontSize: 12,
+                    color: "#0055A4",
+                    textDecoration: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Voir le paiement sur Stripe →
+                </a>
+              )}
             </div>
 
             <div>
