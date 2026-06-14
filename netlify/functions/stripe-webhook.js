@@ -196,7 +196,7 @@ function buildEmailHtml({ session, cart, firstName, orderNumber }) {
 
     <div style="background:#fff;padding:28px 32px;">
       <p style="font-size:15px;line-height:1.55;margin:0 0 22px;color:#333;">
-        Ton paiement est bien arrivé. En achetant chez nous, tu finances directement les activités sportives de l'asso. Merci beaucoup pour ton soutien.
+        C'est tout bon, ton paiement est validé ! Derrière chaque t-shirt il y a une bande de bénévoles : l'argent récolté sert à financer de l'équipement sportif et des licences pour des associations des quartiers prioritaires. Un grand merci pour ton soutien. 💙
       </p>
 
       <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#999;margin:0 0 12px;">
