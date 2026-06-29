@@ -28,20 +28,20 @@ Priorités : 🔴 haute · 🟡 moyenne · ⚪ basse
   Le texte actuel sonne trop artificiel. Repartir sur un ton humain et direct, dans l'esprit de :
   > Pleine Lulu, ça fait trois ans. On est juste trois à essayer de faire vivre un truc autour du football dans les quartiers populaires : des événements sur le terrain, et une boutique qui finance tout ça.
 
-- [ ] 🟡 **Inverser les sections "À propos" et "Retrait"**
-  Dans le défilement du site, "Retrait" arrive après "À propos". Remettre l'ordre des onglets ou sections cohérent avec ce défilement.
+- [x] 🟡 **Inverser les sections "À propos" et "Retrait"**
+  Menu remis dans l'ordre du défilement : Boutique -> À propos -> Retrait (desktop + mobile).
 
-- [ ] 🟡 **Écrire "RDV" en toutes lettres : "rendez-vous"**
-  Présent dans le shop et dans l'onglet Retrait.
+- [x] 🟡 **Écrire "RDV" en toutes lettres : "rendez-vous"**
+  Corrigé dans le panier (label retrait + note commune).
 
-- [ ] 🟡 **Reformuler "on se cale"**
-  Tournure trop familière. La remplacer par quelque chose de plus neutre, par exemple "on convient d'un créneau" ou "on fixe un moment". Présent dans le shop et dans l'onglet Retrait.
+- [x] 🟡 **Reformuler "on se cale"**
+  Remplacé par "on fixe" dans le panier, l'onglet Retrait et le dashboard admin.
 
 ## 🔧 Infra & outils
 
-- [ ] 🟡 **Donner le LinkedIn de l'asso comme source de contexte**
+- [x] 🟡 **Donner le LinkedIn de l'asso comme source de contexte**
+  Publications représentatives fournies et ton/slogan ("Offrons la passion !") enregistrés en mémoire. À recompléter ponctuellement avec les nouvelles publis.
   Page LinkedIn de l'association : https://www.linkedin.com/company/98695995/
-  Objectif : nourrir la rédaction des textes et mieux coller au ton, à la mission et à l'actualité du projet (publications, communication, événements).
 
 - [ ] ⚪ **Étudier la mise en place de GitHub Actions**
   À évaluer : utilité réelle pour le projet (build de vérification, déploiement automatique, contrôles à chaque commit). Prendre une décision go / no-go avant de creuser.
