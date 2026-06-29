@@ -268,7 +268,7 @@ export default function CartDrawer() {
                   style={shippingMethod === "pickup" ? modeBtnActive : modeBtn}
                 >
                   Retrait sur place
-                  <span style={{ display: "block", fontSize: 11, fontWeight: 500, opacity: 0.8 }}>gratuit · RDV via Insta</span>
+                  <span style={{ display: "block", fontSize: 11, fontWeight: 500, opacity: 0.8 }}>gratuit · rendez-vous via Insta</span>
                 </button>
               </div>
 
@@ -296,7 +296,7 @@ export default function CartDrawer() {
                     ))}
                   </select>
                   <p style={{ color: "#aaa", fontSize: 11, marginTop: 6 }}>
-                    Retrait possible uniquement dans ces communes. On cale le point de RDV ensuite sur Instagram,{" "}
+                    Retrait possible uniquement dans ces communes. On fixe le point de rendez-vous ensuite sur Instagram,{" "}
                     <a
                       href={INSTAGRAM_URL}
                       target="_blank"
