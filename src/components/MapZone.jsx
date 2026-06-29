@@ -84,8 +84,8 @@ export default function MapZone() {
             <span style={{ borderBottom: "4px solid #EF4135", paddingBottom: 2 }}>Nantes</span>
           </h2>
           <p style={{ fontSize: 15, color: "#666", maxWidth: 560, margin: "0 auto", lineHeight: 1.5 }}>
-            Dans ces communes, choisis le retrait sur place au moment de la commande : c'est
-            gratuit, on cale le point de rendez-vous ensuite sur Instagram,{" "}
+            Tu es dans le coin ? Choisis le retrait sur place au moment de la commande : c'est
+            gratuit, et on fixe le point de rendez-vous ensuite sur Instagram,{" "}
             <a
               href={INSTAGRAM_URL}
               target="_blank"

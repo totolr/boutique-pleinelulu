@@ -168,21 +168,21 @@ function About() {
     {
       eyebrow: "Pourquoi on existe",
       title: "Notre histoire",
-      text: "Pleine Lulu, ça fait trois ans. On est juste trois à essayer de faire vivre un truc autour du football dans les quartiers populaires : des événements sur le terrain, et une boutique qui finance tout ça.",
+      text: "Pleine Lulu, ça fait trois ans. On est juste trois à essayer de faire vivre un truc autour du football dans les quartiers populaires : des événements sur le terrain, et une boutique qui les finance.",
       variant: "flag",
       reversed: false,
     },
     {
       eyebrow: "Notre but",
       title: "Sport pour tous",
-      text: "100% des bénéfices de la boutique sont reversés à nos activités. L'objectif : permettre au plus grand nombre de jouer au foot, sans barrière financière.",
+      text: "Chaque t-shirt vendu finance directement nos actions : licences, matériel, accompagnement. Parce qu'aucun jeune ne devrait rester sur le bord du terrain faute de moyens.",
       variant: "dark",
       reversed: true,
     },
     {
       eyebrow: "Et après ?",
       title: "On continue",
-      text: "Nos t-shirts sont en précommande : Coupe du Monde, Tricolore, Les Bleus, Nantes FC. Plus on vend, plus on organise d'événements dans les quartiers. La suite dépend de vous.",
+      text: "Deux nouveautés en précommande pour 2026, Coupe du Monde et Tricolore, et nos modèles encore en stock, Les Bleus et Nantes FC. Plus on vend, plus on agit dans les quartiers. Tous ensemble, offrons la passion !",
       variant: "light",
       reversed: false,
     },
@@ -193,14 +193,14 @@ function About() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "80px 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "#0055A4", marginBottom: 12 }}>
-            L'association
+            Qui on est
           </p>
           <h2 style={{ fontSize: "clamp(28px, 5vw, 44px)", fontWeight: 900, letterSpacing: -1, lineHeight: 1.1, marginBottom: 14 }}>
             Pleine Lulu, asso sportive{" "}
             <span style={{ borderBottom: "4px solid #EF4135", paddingBottom: 2 }}>loi 1901</span>
           </h2>
           <p style={{ fontSize: 15, color: "#666", maxWidth: 600, margin: "0 auto", lineHeight: 1.5 }}>
-            Notre objectif est simple, promouvoir la pratique du football dans les quartiers populaires, en transmettant notre passion pour le football grâce à des évènements !
+            On a un objectif simple : faire vivre le football là où il manque de moyens. Des événements sur le terrain, des t-shirts pour les financer, et l'envie de partager notre passion avec le plus de monde possible.
           </p>
         </div>
 
@@ -399,8 +399,8 @@ function Banner({ type, onClose }) {
       }}
     >
       {isSuccess
-        ? "🎉 Merci pour ta précommande ! Un email de confirmation arrive."
-        : "Paiement annulé, ton panier est conservé."}
+        ? "🎉 Merci, tu viens de faire vivre l'asso ! Un email de confirmation arrive."
+        : "Paiement annulé. Pas de souci, ton panier t'attend."}
       <button
         type="button"
         onClick={onClose}
@@ -497,7 +497,7 @@ function Shop() {
             marginBottom: 22,
           }}
         >
-          🏃 Précommande ouverte · chaque achat finance le sport
+          ⚽ Précommande ouverte · chaque achat finance l'accès au sport
         </div>
         <h1
           style={{
@@ -519,8 +519,8 @@ function Shop() {
           </span>
         </h1>
         <p style={{ color: "#666", fontSize: 17, maxWidth: 480, margin: "0 auto" }}>
-          T-shirts de l'asso. 100% des bénéfices
-          reversés aux activités sportives.
+          Nos t-shirts financent l'accès au sport pour des jeunes des quartiers
+          populaires. Tous ensemble, offrons la passion !
         </p>
       </header>
 
@@ -541,7 +541,7 @@ function Shop() {
               <span style={{ color: "#0055A4" }}>★</span> 100% COTON{" "}
               <span style={{ color: "#fff" }}>★</span> IMPRIMÉ EN FRANCE{" "}
               <span style={{ color: "#EF4135" }}>★</span> PRÉCOMMANDE OUVERTE{" "}
-              <span style={{ color: "#0055A4" }}>★</span> TSHIRT ASSOCIATIF{" "}
+              <span style={{ color: "#0055A4" }}>★</span> OFFRONS LA PASSION{" "}
               <span style={{ color: "#EF4135" }}>★</span> SPORT POUR TOUS &nbsp;&nbsp;
             </span>
           ))}

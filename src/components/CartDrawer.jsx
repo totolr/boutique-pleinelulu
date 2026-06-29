@@ -136,7 +136,7 @@ export default function CartDrawer() {
             }}
           >
             <div style={{ fontSize: 44, marginBottom: 10 }}>🛒</div>
-            Panier vide
+            Ton panier est vide
           </div>
         ) : (
           <>
