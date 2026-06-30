@@ -1209,7 +1209,7 @@ function DeliveryBlock({ order }) {
     return (
       <div style={cell}>
         <div>
-          Retrait sur place · le client cale le RDV via Instagram,{" "}
+          Retrait sur place · le client fixe le rendez-vous via Instagram,{" "}
           <a
             href={INSTAGRAM_URL}
             target="_blank"
