@@ -1,51 +1,88 @@
-# TODO - Boutique Pleine Lulu
+# Pleine Lulu · Backlog du site
 
-Suivi des tâches en cours. Coche `- [x]` quand une tâche est terminée.
+Suivi des évolutions de la boutique pleinelulu.fr.
+Dernière mise à jour : 30/06/2026 · 6 tâches ouvertes, 5 livrées.
 
-Priorités : 🔴 haute · 🟡 moyenne · ⚪ basse
+## Légende
 
----
+- **Priorité** : `P1` critique · `P2` important · `P3` confort
+- **Statut** : 🔲 à faire · 🔄 en cours · ✅ livré
+- **Domaines** : UX boutique · Contenu · Bug · Analytics · Infra
 
-## 🐞 Bugs
+## Backlog
 
-- [ ] 🟡 **Champ "numéro de colis" sur une commande en retrait sur place**
-  Le tunnel demande un numéro de suivi alors que la commande est récupérée en main propre. Sans impact réel aujourd'hui, mais à nettoyer : masquer ou retirer ce champ quand le mode choisi est le retrait.
+| ID | Priorité | Tâche | Domaine | Statut |
+|:--:|:--:|-------|:--:|:--:|
+| T1 | `P1` | Confirmation d'ajout au panier plus explicite | UX boutique | 🔲 |
+| T2 | `P1` | Contrôler le stock plus tôt dans le parcours | UX boutique | 🔲 |
+| T3 | `P2` | Saisir la quantité depuis la fiche produit | UX boutique | 🔲 |
+| T4 | `P2` | Masquer le "numéro de colis" en retrait sur place | Bug | 🔲 |
+| T5 | `P2` | Finaliser la configuration PostHog | Analytics | 🔲 |
+| T6 | `P3` | Étudier la mise en place de GitHub Actions | Infra | 🔲 |
 
-## 🛒 Parcours d'achat (panier & shop)
+## Détail des tâches
 
-- [ ] 🔴 **Confirmation "Ajouté au panier" trop fugace**
-  L'animation du bouton "Ajouté" disparaît trop vite : on ne sent pas que l'article a bien été pris en compte. Rendre le retour plus explicite et plus durable, par exemple un bouton qui reste sur "Ajouté ✓" plus longtemps, un petit message de confirmation, ou le compteur du panier qui s'anime.
+### T1 · Confirmation d'ajout au panier plus explicite
+`P1` · UX boutique · 🔲
 
-- [ ] 🔴 **Vérifier le stock plus tôt dans le parcours**
-  Aujourd'hui l'indisponibilité n'apparaît qu'au clic "Payer avec Stripe", c'est trop tard : le panier est déjà bouclé. Vérifier la disponibilité dès le "+" de quantité. Pistes : plafonner automatiquement à la quantité réellement en stock, et signaler visuellement l'indispo (taille ou coloris grisé, ou passé en orange "plus dispo").
+Le bouton "Ajouté ✓" disparaît trop vite : on ne sent pas que l'article a été pris en compte.
 
-- [ ] 🟡 **Saisie directe de la quantité sur la fiche produit**
-  Permettre de taper une quantité avant d'ajouter au panier (ex : saisir "3" puis cliquer sur "Ajouter au panier"), tout en gardant la possibilité d'ajuster ensuite depuis le panier. Objectif : composer vite une grosse commande, puis corriger facilement en cas d'oubli (en ajouter un, en retirer un).
+Critères d'acceptation :
+- [ ] Le retour visuel reste perceptible assez longtemps (ou via un message dédié).
+- [ ] Le compteur du panier s'anime à chaque ajout.
+- [ ] Vérifié sur mobile et desktop.
 
-## ✍️ Contenu & textes
+### T2 · Contrôler le stock plus tôt dans le parcours
+`P1` · UX boutique · 🔲
 
-- [ ] 🔴 **Réécrire le texte d'intro / "À propos"**
-  Le texte actuel sonne trop artificiel. Repartir sur un ton humain et direct, dans l'esprit de :
-  > Pleine Lulu, ça fait trois ans. On est juste trois à essayer de faire vivre un truc autour du football dans les quartiers populaires : des événements sur le terrain, et une boutique qui finance tout ça.
+Aujourd'hui l'indisponibilité n'apparaît qu'au clic "Payer", trop tard : le panier est déjà bouclé.
 
-- [x] 🟡 **Inverser les sections "À propos" et "Retrait"**
-  Menu remis dans l'ordre du défilement : Boutique -> À propos -> Retrait (desktop + mobile).
+Critères d'acceptation :
+- [ ] Disponibilité vérifiée dès le "+" de quantité.
+- [ ] Quantité plafonnée au stock réel.
+- [ ] Taille ou coloris indisponible signalé visuellement (grisé ou orange).
 
-- [x] 🟡 **Écrire "RDV" en toutes lettres : "rendez-vous"**
-  Corrigé dans le panier (label retrait + note commune).
+### T3 · Saisir la quantité depuis la fiche produit
+`P2` · UX boutique · 🔲
 
-- [x] 🟡 **Reformuler "on se cale"**
-  Remplacé par "on fixe" dans le panier, l'onglet Retrait et le dashboard admin.
+Pouvoir choisir une quantité avant d'ajouter au panier, sans retirer l'ajustement existant depuis le panier.
 
-## 🔧 Infra & outils
+Critères d'acceptation :
+- [ ] Champ quantité sur la fiche produit.
+- [ ] Ajustement toujours possible depuis le panier.
+- [ ] Quantité bornée au stock disponible (dépend de T2).
 
-- [x] 🟡 **Donner le LinkedIn de l'asso comme source de contexte**
-  Publications représentatives fournies et ton/slogan ("Offrons la passion !") enregistrés en mémoire. À recompléter ponctuellement avec les nouvelles publis.
-  Page LinkedIn de l'association : https://www.linkedin.com/company/98695995/
+### T4 · Masquer le "numéro de colis" en retrait sur place
+`P2` · Bug · 🔲
 
-- [ ] ⚪ **Étudier la mise en place de GitHub Actions**
-  À évaluer : utilité réelle pour le projet (build de vérification, déploiement automatique, contrôles à chaque commit). Prendre une décision go / no-go avant de creuser.
+Le tunnel demande un numéro de suivi alors que la commande est récupérée en main propre. Sans impact réel aujourd'hui, mais à nettoyer.
 
-- [ ] 🟡 **Finaliser la configuration PostHog**
-  Renseigner les "Authorized URLs" et le reverse proxy.
-  Parcours dans PostHog : Web Analytics -> Installation health -> Configuration.
+Critères d'acceptation :
+- [ ] Le champ disparaît quand le mode "retrait sur place" est choisi.
+
+### T5 · Finaliser la configuration PostHog
+`P2` · Analytics · 🔲
+
+Critères d'acceptation :
+- [ ] "Authorized URLs" renseignées.
+- [ ] Reverse proxy configuré.
+- [ ] Parcours au vert : Web Analytics -> Installation health -> Configuration.
+
+### T6 · Étudier la mise en place de GitHub Actions
+`P3` · Infra · 🔲
+
+À cadrer avant de creuser : build de vérification, déploiement, contrôles automatiques à chaque commit.
+
+Critères d'acceptation :
+- [ ] Décision go / no-go documentée (utilité réelle pour le projet).
+- [ ] Si go : workflow minimal (build) en place.
+
+## Livré
+
+| Tâche | Domaine | Référence |
+|-------|:--:|:--:|
+| Réécriture des textes du site dans le ton de l'asso (hero, à propos, retrait, panier, bandeaux) | Contenu | PR #2 |
+| Inversion des sections "À propos" et "Retrait" dans le menu | UX boutique | PR #2 |
+| "RDV" écrit en toutes lettres ("rendez-vous") | Contenu | PR #2 |
+| "On se cale" reformulé en "on fixe" | Contenu | PR #2 |
+| LinkedIn de l'asso fourni comme source de contexte (ton et slogan enregistrés en mémoire) | Infra | - |
